@@ -1,0 +1,64 @@
+version: '2.1'
+
+services:
+  microservice1:
+    image: microservice1:latest
+    environment:
+      SERVER_PORT: 8080
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      ZIPKIN_URL: http://zipkin:9411/
+    ports:
+      - 8080:8080
+    labels:
+      - "com.description=Microservice 1"
+    networks:
+      - example-net
+    depends_on:
+      eureka:
+        condition: service_healthy
+
+  microservice2:
+    image: microservice2:latest
+    environment:
+      SERVER_PORT: 8081
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      ZIPKIN_URL: http://zipkin:9411/
+    ports:
+      - 8081:8081
+    labels:
+      - "com.description=Microservice 2"
+    networks:
+      - example-net
+    depends_on:
+      eureka:
+        condition: service_healthy
+  
+  eureka:
+    image: eureka:latest
+    ports:
+      - 8761:8761
+    labels:
+      - "com.description=Eureka"
+    networks:
+      - example-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka:8761"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    labels:
+      - "com.description=Zipkin"
+    networks:
+      - example-net
+networks:
+  example-net:
+
+volumes:
+  data:
