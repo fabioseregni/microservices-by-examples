@@ -1,4 +1,4 @@
-package com.phoenix.microservices;
+package it.sorintlab.microservices;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

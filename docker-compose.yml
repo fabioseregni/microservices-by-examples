@@ -1,6 +1,30 @@
 version: '2.1'
 
 services:
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    labels:
+      - "com.description=Zipkin"
+    networks:
+      - example-net
+
+  eureka:
+    image: eureka:latest
+    ports:
+      - 8761:8761
+    labels:
+      - "com.description=Eureka"
+    networks:
+      - example-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka:8761"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   microservice1:
     image: microservice1:latest
     environment:
@@ -34,29 +58,7 @@ services:
     depends_on:
       eureka:
         condition: service_healthy
-  
-  eureka:
-    image: eureka:latest
-    ports:
-      - 8761:8761
-    labels:
-      - "com.description=Eureka"
-    networks:
-      - example-net
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://eureka:8761"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
 
-  zipkin:
-    image: openzipkin/zipkin
-    ports:
-      - 9411:9411
-    labels:
-      - "com.description=Zipkin"
-    networks:
-      - example-net
 networks:
   example-net:
 

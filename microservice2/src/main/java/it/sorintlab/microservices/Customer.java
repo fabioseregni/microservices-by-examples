@@ -1,4 +1,4 @@
-package com.phoenix.microservices;
+package it.sorintlab.microservices;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

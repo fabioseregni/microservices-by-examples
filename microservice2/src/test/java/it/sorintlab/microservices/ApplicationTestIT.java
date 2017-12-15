@@ -1,10 +1,9 @@
-package com.phoenix.microservices;
+package it.sorintlab.microservices;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import it.sorintlab.microservices.Customer;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestConfiguration
-public class ApplicationTest {
+public class ApplicationTestIT {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;

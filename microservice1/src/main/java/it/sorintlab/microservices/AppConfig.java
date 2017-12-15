@@ -1,4 +1,4 @@
-package com.phoenix.microservices;
+package it.sorintlab.microservices;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
