@@ -14,7 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import it.sorintlab.microservices.Customer;
+import it.sorintlab.microservices.model.Customer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -26,10 +26,10 @@ public class ApplicationTestIT {
 	
 	@Test
 	public void shoudGetCustomerByLastName() {
-		ResponseEntity<Customer[]> entity = restTemplate.getForEntity("/customers?lastName={lastName}",Customer[].class, "Bauer");
+		ResponseEntity<Customer[]> entity = restTemplate.getForEntity("/customers?lastName={lastName}",Customer[].class, "Seregni");
 		
 		assertNotNull(entity.getBody());
-		assertThat(entity.getBody().length, equalTo(2));
+		assertThat(entity.getBody().length, equalTo(1));
 	}
 	
 

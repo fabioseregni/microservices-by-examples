@@ -1,0 +1,9 @@
+server:
+  port: 9093
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616  
+management:
+  security: 
+    enabled: false
+

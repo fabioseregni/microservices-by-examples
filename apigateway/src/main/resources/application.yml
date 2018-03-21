@@ -1,0 +1,27 @@
+server:
+  port: 10000
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+zuul:
+  routes: 
+    ms1:
+      path: /ms1/**
+      serviceId: microservice1
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 6000
+management:
+  security: 
+    enabled: false
+spring:
+  zipkin:
+    baseUrl: ${ZIPKIN_URL:http://localhost:9411/}

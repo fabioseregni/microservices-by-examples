@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: microservice4
+  cloud:
+    config:
+      uri: http://localhost:10001
