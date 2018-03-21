@@ -8,6 +8,6 @@ spring:
     config: 
       server:
         git:
-          uri: <git remote>/config
+          uri: https://github.com/fabioseregni/microservices-by-examples/config
         bootstrap: true  
           
