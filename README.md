@@ -14,6 +14,8 @@ Microservices urls:
 	* http://localhost:10000
 * Config Server
 	* http://localhost:10001
+* Auth Server
+	* http://localhost:10001
 * Microservice1
 	* http://localhost:9091
 * Microservice2
