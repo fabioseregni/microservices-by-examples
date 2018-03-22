@@ -35,8 +35,8 @@ security:
     client:
       clientId: my-client-with-secret   
       clientSecret: secret
-      accessTokenUri: http://localhost:9094/oauth/token
-      userAuthorizationUri: http://localhost:9094/oauth/authorize
+      accessTokenUri: http://localhost:10002/oauth/token
+      userAuthorizationUri: http://localhost:10002/oauth/authorize
 management:
   security: 
     enabled: false      

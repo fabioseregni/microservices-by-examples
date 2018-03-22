@@ -1,20 +1,16 @@
 package it.sorintlab.microservices.microservice4;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,30 +47,17 @@ public class Oauth2AuthorizationServerApplication {
 
 		@Override
 		public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-			resources.resourceId("protected-resource");
+			resources.tokenServices(remoteTokenServices()).resourceId("protected-resource");
+		}
+
+		@Bean
+		public RemoteTokenServices remoteTokenServices() {
+			final RemoteTokenServices tokenServices = new RemoteTokenServices();
+			tokenServices.setCheckTokenEndpointUrl("http://localhost:10002/oauth/check_token");
+			tokenServices.setClientId("resource-server");
+			tokenServices.setClientSecret("resource-server");
+			return tokenServices;
 		}
 
 	}
-
-	@Configuration
-	@EnableAuthorizationServer
-	protected static class OAuth2Config extends AuthorizationServerConfigurerAdapter {
-
-		@Autowired
-		private AuthenticationManager authenticationManager;
-
-		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.authenticationManager(authenticationManager);
-		}
-
-		@Override
-		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-			clients.inMemory().withClient("my-client-with-secret")
-					.authorizedGrantTypes("client_credentials", "password").authorities("ROLE_CLIENT").scopes("read")
-					.resourceIds("protected-resource").secret("secret");
-		}
-
-	}
-
 }

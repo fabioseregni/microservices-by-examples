@@ -1,0 +1,10 @@
+server:
+  port: 10002
+logging:
+  level:
+    org.springframework.web.client: TRACE
+    org.springframework.http.client: TRACE
+    org.springframework.security: DEBUG
+management:
+  security: 
+    enabled: false
